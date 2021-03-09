@@ -6,6 +6,5 @@ describe 'User Stories' do
    it 'oystercard has balance equal 0 on initalization' do
      expect(oystercard.balance).to equal 0
    end
-
-    end
+  end
 end
