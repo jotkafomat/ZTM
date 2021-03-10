@@ -33,4 +33,30 @@ describe 'User Stories' do
 
     expect { oystercard.deduct(3) }.to change { oystercard.balance }.by(-3)
   end
+
+  # In order to get through the barriers.
+  # As a customer
+  # I need to touch in and out.
+  describe '#touch_in' do
+
+    it 'is initially not in a journey' do
+      expect(oystercard).not_to be_in_journey
+    end
+
+    it'change in in_journey status when touch in' do
+      oystercard.touch_in
+
+      expect(oystercard).to be_in_journey
+    end
+
+  end
+  describe '#touch_out' do
+
+    it'change in in_journey status when touch out' do
+      oystercard.touch_in
+      oystercard.touch_out
+      expect(oystercard).not_to be_in_journey 
+    end
+
+  end
 end

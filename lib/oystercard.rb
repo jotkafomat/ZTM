@@ -5,6 +5,7 @@ class Oystercard
   def initialize(maximum_balance = MAXIMUM_BALANCE)
     @maximum_balance = maximum_balance
     @balance = 0
+    @in_journey = false
   end
 
   def top_up(value)
@@ -15,6 +16,18 @@ class Oystercard
 
   def deduct(fare)
     @balance -= fare
+  end
+
+  def touch_in
+    @in_journey = !@in_journey
+  end
+
+  def touch_out
+    @in_journey = !@in_journey
+  end
+
+  def in_journey?
+    @in_journey
   end
 
   private

@@ -11,6 +11,7 @@ describe Oystercard do
 
   describe '#top_up' do
     it 'allows to top_up card' do
+
       expect(oystercard).to respond_to(:top_up).with(1).argument
     end
 
@@ -20,13 +21,33 @@ describe Oystercard do
     end
 
     it'raises an error when balance is higher then 90' do
+
       expect { oystercard.top_up(91) }.to raise_error "Cannot top up £91. the maximum balance is £#{Oystercard::MAXIMUM_BALANCE}"
     end
-
-    it'deducts fare from oystercard' do
-      oystercard.top_up(10)
-
-      expect { oystercard.deduct(3) }.to change { oystercard.balance }.by(-3)
-    end
   end
+
+    describe'#deduct' do
+      it'deducts fare from oystercard' do
+        oystercard.top_up(10)
+
+        expect { oystercard.deduct(3) }.to change { oystercard.balance }.by(-3)
+      end
+    end
+
+    describe '#touch_in' do
+      it'change in in_journey status when touch in' do
+        oystercard.touch_in
+
+        expect(oystercard.in_journey?).to eq true
+      end
+    end
+
+    describe '#touch_out'do
+      it'change in in_journey status when touch out' do
+        oystercard.touch_in
+        oystercard.touch_out
+
+        expect(oystercard.in_journey?).to eq false
+      end
+    end
 end
