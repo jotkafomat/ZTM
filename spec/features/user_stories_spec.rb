@@ -25,15 +25,6 @@ describe 'User Stories' do
     expect { oystercard.top_up(91) }.to raise_error 'Cannot top up £91. the maximum balance is £90'
   end
 
-  # In order to pay for my journey
-  # As a customer
-  # I need my fare deducted from my card
-  it'deducts fare from ouystercard' do
-    oystercard.top_up(10)
-
-    expect { oystercard.deduct(3) }.to change { oystercard.balance }.by(-3)
-  end
-
   # In order to get through the barriers.
   # As a customer
   # I need to touch in and out.
@@ -59,6 +50,13 @@ describe 'User Stories' do
       oystercard.touch_out
 
       expect(oystercard).not_to be_in_journey
+    end
+
+    it'deduct minimum fare on touch out' do
+      oystercard.top_up(5)
+      oystercard.touch_in
+
+      expect { oystercard.touch_out }.to change { oystercard.balance }.by(-Oystercard::MINIMUM_FARE)
     end
   end
 
