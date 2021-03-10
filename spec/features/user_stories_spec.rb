@@ -44,6 +44,7 @@ describe 'User Stories' do
     end
 
     it'change in in_journey status when touch in' do
+      oystercard.top_up(5)
       oystercard.touch_in
 
       expect(oystercard).to be_in_journey
@@ -53,10 +54,28 @@ describe 'User Stories' do
   describe '#touch_out' do
 
     it'change in in_journey status when touch out' do
+      oystercard.top_up(5)
       oystercard.touch_in
       oystercard.touch_out
-      expect(oystercard).not_to be_in_journey 
-    end
 
+      expect(oystercard).not_to be_in_journey
+    end
   end
+
+  # In order to pay for my journey
+  # As a customer
+  # I need to have the minimum amount (£1) for a single journey.
+
+  describe 'minimum balnce' do
+    it'checks if there is 1£ on the card' do
+      expect { oystercard.touch_in }.to raise_error 'Insufficient funds, Please toup your card'
+    end
+  end
+
+  # In order to pay for my journey
+  # As a customer
+  # When my journey is complete, I need the correct amount deducted from my card
+
+
+
 end
