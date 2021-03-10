@@ -23,10 +23,6 @@ describe Oystercard do
       expect { oystercard.top_up(91) }.to raise_error "Cannot top up £91. the maximum balance is £#{Oystercard::MAXIMUM_BALANCE}"
     end
 
-    it'deducts money from card' do
-      expect(oystercard).to respond_to(:deduct).with(1).argument
-    end
-
     it'deducts fare from oystercard' do
       oystercard.top_up(10)
 

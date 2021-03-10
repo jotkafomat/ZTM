@@ -28,10 +28,6 @@ describe 'User Stories' do
   # In order to pay for my journey
   # As a customer
   # I need my fare deducted from my card
-  it'deducts money from card' do
-    expect(oystercard).to respond_to(:deduct).with(1).argument
-  end
-
   it'deducts fare from ouystercard' do
     oystercard.top_up(10)
 
