@@ -1,10 +1,16 @@
 describe 'User Stories' do
  let(:oystercard) { Oystercard.new }
  let(:station) { Station.new }
+ let(:station2) { Station.new }
 
   it 'oystercard has balance equal 0 on initalization' do
     expect(oystercard.balance).to equal 0
   end
+
+  it 'has empty travel history upon init' do
+    expect(oystercard.travel_history).to be_empty
+  end
+
   it 'user can add money to a card' do
 
     expect { oystercard.top_up(10) }.to change { oystercard.balance }.by(10)
@@ -41,7 +47,7 @@ describe 'User Stories' do
     it'change in in_journey status when touch out' do
       oystercard.top_up(5)
       oystercard.touch_in(station)
-      oystercard.touch_out
+      oystercard.touch_out(station2)
 
       expect(oystercard).not_to be_in_journey
     end
@@ -50,13 +56,13 @@ describe 'User Stories' do
       oystercard.top_up(5)
       oystercard.touch_in(station)
 
-      expect { oystercard.touch_out }.to change { oystercard.balance }.by(-Oystercard::MINIMUM_FARE)
+      expect { oystercard.touch_out(station2) }.to change { oystercard.balance }.by(-Oystercard::MINIMUM_FARE)
     end
 
     it'forgets entry station when touch out' do
       oystercard.top_up(5)
       oystercard.touch_in(station)
-      oystercard.touch_out
+      oystercard.touch_out(station2)
       expect(oystercard.entry_station).to eq nil
     end
   end
@@ -64,6 +70,16 @@ describe 'User Stories' do
   describe 'minimum balnce' do
     it'checks if there is 1£ on the card' do
       expect { oystercard.touch_in(station) }.to raise_error 'Insufficient funds, Please toup your card'
+    end
+  end
+
+  describe 'travel_history' do
+    it 'adds one journey' do
+      oystercard.top_up(5)
+      oystercard.touch_in(station)
+      oystercard.touch_out(station2)
+      expect(oystercard.travel_history).not_to be_empty
+      expect(oystercard.travel_history.length).to eq 1
     end
   end
 end
