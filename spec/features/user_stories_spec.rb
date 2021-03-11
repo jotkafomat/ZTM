@@ -1,7 +1,7 @@
 describe 'User Stories' do
  let(:oystercard) { Oystercard.new }
- let(:station) { Station.new }
- let(:station2) { Station.new }
+ let(:station) { Station.new(name: "Brixton", zone: 2) }
+ let(:station2) { Station.new(name: "Pimlico", zone: 1)}
 
   it 'oystercard has balance equal 0 on initalization' do
     expect(oystercard.balance).to equal 0
