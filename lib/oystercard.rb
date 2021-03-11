@@ -48,7 +48,7 @@ class Oystercard
     balance < MINIMUM_FARE
   end
   def create_journey
-    journey = { entry_station => exit_station }
+    journey = { :entry_station => entry_station,  :exit_station=> exit_station }
     @travel_history.push(journey)
   end
 

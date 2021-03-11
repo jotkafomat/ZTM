@@ -75,6 +75,7 @@ describe Oystercard do
     end
 
     describe '#travel_history' do
+      let(:journey){ {entry_station: station, exit_station: station2} }
       it 'is empty upon creation'do
         expect(oystercard.travel_history).to be_empty
       end
@@ -82,7 +83,8 @@ describe Oystercard do
         oystercard.top_up(5)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
-        expect(oystercard.travel_history).not_to be_empty
+
+        expect(oystercard.travel_history).to include journey
       end
     end
 end
