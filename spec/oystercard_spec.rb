@@ -40,7 +40,7 @@ describe Oystercard do
 
       oystercard.top_up(5)
       oystercard.touch_in(station)
-      expect(oystercard.entry_station).to eq station
+      expect(oystercard.current_journey.entry_station).to eq station
     end
 
   end
@@ -64,7 +64,7 @@ describe Oystercard do
         oystercard.top_up(5)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
-        expect(oystercard.entry_station).to eq nil
+        expect(oystercard.current_journey.entry_station).to eq nil
       end
     end
 
@@ -75,19 +75,18 @@ describe Oystercard do
     end
 
     describe '#travel_history' do
-      let(:journey){ {entry_station: station, exit_station: station2} }
 
       it 'is empty upon creation'do
         expect(oystercard.travel_history).to be_empty
       end
 
-      
+
       it 'adds one journey' do
         oystercard.top_up(5)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
 
-        expect(oystercard.travel_history).to include journey
+        expect(oystercard.travel_history).not_to be_empty
       end
 
     end

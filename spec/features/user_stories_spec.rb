@@ -55,7 +55,7 @@ describe 'User Stories' do
 
         oystercard.top_up(5)
         oystercard.touch_in(station)
-        expect(oystercard.entry_station).to eq station
+        expect(oystercard.current_journey.entry_station).to eq station
       end
     end
 
@@ -74,7 +74,7 @@ describe 'User Stories' do
         oystercard.top_up(5)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
-        expect(oystercard.entry_station).to eq nil
+        expect(oystercard.current_journey.entry_station).to eq nil
       end
     end
   end
@@ -94,7 +94,7 @@ describe 'User Stories' do
         oystercard.top_up(5)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
-        expect(oystercard.travel_history.last[:entry_station]).to eq station
+        expect(oystercard.travel_history.last.entry_station.name).to eq "Brixton"
       end
     end
   end
@@ -105,9 +105,8 @@ describe 'User Stories' do
       oystercard.top_up(5)
       oystercard.touch_in(station)
       oystercard.touch_out(station2)
-      journey = {entry_station: station, exit_station: station2}
 
-      expect(oystercard.travel_history.last).to eq journey
+    expect(oystercard.travel_history.last.entry_station.name).to eq "Brixton"
     end
   end
   describe ' user stories 9 I want to know what zone a station is in' do
@@ -115,7 +114,7 @@ describe 'User Stories' do
       oystercard.top_up(5)
       oystercard.touch_in(station)
       oystercard.touch_out(station2)
-      expect(oystercard.travel_history.last[:exit_station].zone).to eq 1
+      expect(oystercard.travel_history.last.exit_station.zone).to eq 1
     end
   end
 
